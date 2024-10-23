@@ -1,0 +1,23 @@
+syntax="proto3";
+option go_package="grpc/name-server";
+//GOLANG namespace
+package grpc.nameserver;
+
+
+message NameRequest{
+  string serviceName=1;
+  repeated string addr=2;
+}
+
+message NameResponse{
+  string serviceName=1;
+  repeated string addr=2;
+}
+
+
+service NameServer{
+  rpc Register(NameRequest) returns (NameResponse){};
+  rpc Delete(NameRequest) returns(NameResponse){};
+  rpc KeepAlive(stream NameRequest) returns(NameResponse){};
+  rpc GetAddr(NameRequest) returns (NameResponse){};
+}

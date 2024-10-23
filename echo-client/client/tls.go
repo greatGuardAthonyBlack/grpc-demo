@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	ca_cert_path = "D:\\programing\\go_workspace\\grpc\\x509\\ca_cert.pem"
+	ca_cert_path = "D:\\go_workspace\\grpc-demo\\x509\\ca_cert.pem"
 	domain       = "echo.grpc.0voice.com"
 )
 
@@ -22,6 +22,6 @@ func GetTlsSecurityOption() grpc.DialOption {
 		log.Fatal(err)
 	}
 	option := grpc.WithTransportCredentials(cred)
-	
+
 	return option
 }

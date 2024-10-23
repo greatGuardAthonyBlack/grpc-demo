@@ -58,7 +58,7 @@ func (EchoServer) ServerStreamEcho(in *echo.EchoRequest, stream echo.Echo_Server
 		stream.SetTrailer(tailer)
 	}()
 	stream.SendHeader(header)
-	resourcePath := "D:\\programing\\go_workspace\\grpc\\echo-server\\file\\server.jpg"
+	resourcePath := "D:\\go_workspace\\grpc-demo\\echo-server\\file\\server.jpg"
 	f, err := os.Open(resourcePath)
 	if err != nil {
 		log.Fatal(err)
@@ -83,7 +83,7 @@ func (EchoServer) ServerStreamEcho(in *echo.EchoRequest, stream echo.Echo_Server
 	return nil
 }
 func (EchoServer) ClientStreamEcho(stream echo.Echo_ClientStreamEchoServer) error {
-	savePath := "D:\\programing\\go_workspace\\grpc\\echo-server\\upload\\" + strconv.FormatInt(time.Now().UnixMilli(), 10) + ".jpg"
+	savePath := "D:\\go_workspace\\grpc-demo\\echo-server\\upload\\" + strconv.FormatInt(time.Now().UnixMilli(), 10) + ".jpg"
 	f, err := os.OpenFile(savePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		log.Fatal(err)
@@ -129,7 +129,7 @@ func (EchoServer) Way2StreamEcho(stream echo.Echo_Way2StreamEchoServer) error {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		savePath := "D:\\programing\\go_workspace\\grpc\\echo-server\\upload\\" + strconv.FormatInt(time.Now().UnixMilli(), 10) + ".jpg"
+		savePath := "D:\\go_workspace\\grpc-demo\\echo-server\\upload\\" + strconv.FormatInt(time.Now().UnixMilli(), 10) + ".jpg"
 		f, err := os.OpenFile(savePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 		if err != nil {
 			log.Fatal(err)
@@ -152,7 +152,7 @@ func (EchoServer) Way2StreamEcho(stream echo.Echo_Way2StreamEchoServer) error {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		resourcePath := "D:\\programing\\go_workspace\\grpc\\echo-server\\file\\server.jpg"
+		resourcePath := "D:\\go_workspace\\grpc-demo\\echo-server\\file\\server.jpg"
 		f, err := os.Open(resourcePath)
 		if err != nil {
 			log.Fatal(err)

@@ -81,7 +81,7 @@ func (c *EchoClient) CallServerEchoStream() {
 		log.Fatal(err)
 	}
 
-	savePath := "D:\\programing\\go_workspace\\grpc\\echo-client\\download\\" + strconv.FormatInt(time.Now().UnixMilli(), 10) + ".jpg"
+	savePath := "D:\\go_workspace\\grpc-demo\\echo-client\\download\\" + strconv.FormatInt(time.Now().UnixMilli(), 10) + ".jpg"
 	file, err := os.OpenFile(savePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		log.Fatal(err)
@@ -111,7 +111,7 @@ func (c *EchoClient) CallClientEchoStream() {
 		}
 
 	}()
-	path := "D:\\programing\\go_workspace\\grpc\\echo-client\\file\\client.jpg"
+	path := "D:\\go_workspace\\grpc-demo\\echo-client\\file\\client.jpg"
 	f, err := os.Open(path)
 	if err != nil {
 		log.Fatal(err)
@@ -188,7 +188,7 @@ func (c *EchoClient) CallWay2StreamEcho() {
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
-		path := "D:\\programing\\go_workspace\\grpc\\echo-client\\file\\client.jpg"
+		path := "D:\\go_workspace\\grpc-demo\\echo-client\\file\\client.jpg"
 		f, err := os.Open(path)
 		if err != nil {
 			log.Fatal(err)
@@ -224,7 +224,7 @@ func (c *EchoClient) CallWay2StreamEcho() {
 	go func() {
 		defer wg.Done()
 
-		savePath := "D:\\programing\\go_workspace\\grpc\\echo-client\\download\\" + strconv.FormatInt(time.Now().UnixMilli(), 10) + ".jpg"
+		savePath := "D:\\go_workspace\\grpc-demo\\echo-client\\download\\" + strconv.FormatInt(time.Now().UnixMilli(), 10) + ".jpg"
 		file, err := os.OpenFile(savePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 		if err != nil {
 			log.Fatal(err)

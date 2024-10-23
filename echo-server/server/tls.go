@@ -6,8 +6,8 @@ import (
 	"log"
 )
 
-const server_cert_path = "D:\\programing\\go_workspace\\grpc\\x509\\server_cert.pem"
-const server_cert_key_path = "D:\\programing\\go_workspace\\grpc\\x509\\server_key.pem"
+const server_cert_path = "D:\\go_workspace\\grpc-demo\\x509\\server_cert.pem"
+const server_cert_key_path = "D:\\go_workspace\\grpc-demo\\x509\\server_key.pem"
 
 func getTlsOption() grpc.ServerOption {
 	cred, err := credentials.NewServerTLSFromFile(server_cert_path, server_cert_key_path)
