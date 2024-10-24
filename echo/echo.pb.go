@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.28.1
 // 	protoc        v4.22.0
-// source: echo.proto
+// source: echo.name
 
 package echo
 

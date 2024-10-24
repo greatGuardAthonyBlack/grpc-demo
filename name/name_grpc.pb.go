@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v5.28.3
-// source: name.proto
+// source: name.name
 
-package name_server
+package name
 
 import (
 	context "context"
@@ -244,5 +244,5 @@ var NameServer_ServiceDesc = grpc.ServiceDesc{
 			ClientStreams: true,
 		},
 	},
-	Metadata: "name.proto",
+	Metadata: "name.name",
 }

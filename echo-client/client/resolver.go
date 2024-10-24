@@ -3,9 +3,13 @@ package client
 import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/resolver"
+	nc "grpc/name-client"
+	"log"
 )
 
 var INSTANCES = []string{"localhost:50051", "localhost:50052", "localhost:50053"}
+var nameServerClient *nc.NameClient
+var nameServerAddr = "localhost:60051"
 
 const (
 	SCHEME  = "grpc"
@@ -15,11 +19,16 @@ const (
 type NameResolverBuilder struct {
 }
 
+func init() {
+
+	nameServerClient = nc.BuildNameClient(nameServerAddr)
+}
+
 func (*NameResolverBuilder) Build(target resolver.Target, cc resolver.ClientConn, opts resolver.BuildOptions) (resolver.Resolver, error) {
 	r := NameResolver{
 		target:    target,
 		cc:        cc,
-		addrStore: map[string][]string{SERVICE: INSTANCES},
+		addrStore: map[string][]string{SERVICE: nameServerClient.GetServiceAddr(SERVICE)},
 	}
 	r.Start()
 	return &r, nil
@@ -40,7 +49,9 @@ type NameResolver struct {
 }
 
 func (r *NameResolver) ResolveNow(opts resolver.ResolveNowOptions) {
-
+	r.addrStore = map[string][]string{SERVICE: nameServerClient.GetServiceAddr(SERVICE)}
+	log.Println("refresh client resolver")
+	r.Start()
 }
 
 func (r *NameResolver) Close() {

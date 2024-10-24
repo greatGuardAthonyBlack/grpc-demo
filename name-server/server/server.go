@@ -2,35 +2,37 @@ package server
 
 import (
 	"context"
-	name_server "grpc/name-server/proto"
+	"grpc/name"
 	"io"
+	"log"
 )
 
 type NameServer struct {
-	name_server.UnimplementedNameServerServer
+	name.UnimplementedNameServerServer
 }
 
-func (*NameServer) Register(ctx context.Context, in *name_server.NameRequest) (*name_server.NameResponse, error) {
+func (*NameServer) Register(ctx context.Context, in *name.NameRequest) (*name.NameResponse, error) {
 
 	for _, a := range in.Addr {
 		Register(in.ServiceName, a)
+		log.Printf("service: %s  addr:%s is registered\n", in.ServiceName, a)
 	}
 
-	return &name_server.NameResponse{
+	return &name.NameResponse{
 		ServiceName: in.ServiceName,
 	}, nil
 }
 
-func (*NameServer) Delete(ctx context.Context, in *name_server.NameRequest) (*name_server.NameResponse, error) {
+func (*NameServer) Delete(ctx context.Context, in *name.NameRequest) (*name.NameResponse, error) {
 	for _, a := range in.Addr {
 		Delete(in.ServiceName, a)
 	}
 
-	return &name_server.NameResponse{
+	return &name.NameResponse{
 		ServiceName: in.ServiceName,
 	}, nil
 }
-func (*NameServer) KeepAlive(stream name_server.NameServer_KeepAliveServer) error {
+func (*NameServer) KeepAlive(stream name.NameServer_KeepAliveServer) error {
 	for {
 		recv, err := stream.Recv()
 		if err == io.EOF {
@@ -44,12 +46,12 @@ func (*NameServer) KeepAlive(stream name_server.NameServer_KeepAliveServer) erro
 			Keepalive(recv.ServiceName, a)
 		}
 	}
-	return stream.SendAndClose(&name_server.NameResponse{})
+	return stream.SendAndClose(&name.NameResponse{})
 }
-func (*NameServer) GetAddr(ctx context.Context, in *name_server.NameRequest) (*name_server.NameResponse, error) {
+func (*NameServer) GetAddr(ctx context.Context, in *name.NameRequest) (*name.NameResponse, error) {
 	list := make([]string, 0)
 	list = append(list, GetService(in.ServiceName)...)
-	return &name_server.NameResponse{
+	return &name.NameResponse{
 		ServiceName: in.ServiceName,
 		Addr:        list,
 	}, nil

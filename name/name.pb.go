@@ -2,11 +2,11 @@
 // versions:
 // 	protoc-gen-go v1.28.1
 // 	protoc        v5.28.3
-// source: name.proto
+// source: name.name
 
 //GOLANG namespace
 
-package name_server
+package name
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"

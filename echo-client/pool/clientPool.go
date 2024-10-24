@@ -7,16 +7,16 @@ import (
 	"sync"
 )
 
-type ClientPool interface {
+type ClientPoolApi interface {
 	Get() *grpc.ClientConn
 	Put(*grpc.ClientConn)
 }
-type clientPool struct {
+type ClientPool struct {
 	pool sync.Pool
 }
 
-func BuildPool(target string, opts ...grpc.DialOption) (*clientPool, error) {
-	return &clientPool{
+func BuildPool(target string, opts ...grpc.DialOption) (*ClientPool, error) {
+	return &ClientPool{
 		pool: sync.Pool{
 			New: func() any {
 				conn, err := grpc.NewClient(target, opts...)
@@ -30,7 +30,7 @@ func BuildPool(target string, opts ...grpc.DialOption) (*clientPool, error) {
 	}, nil
 }
 
-func (p *clientPool) Get() *grpc.ClientConn {
+func (p *ClientPool) Get() *grpc.ClientConn {
 	conn := p.pool.Get().(*grpc.ClientConn)
 	if conn.GetState() == connectivity.Shutdown || conn.GetState() == connectivity.TransientFailure {
 		conn.Close()
@@ -39,7 +39,7 @@ func (p *clientPool) Get() *grpc.ClientConn {
 	return conn
 }
 
-func (p *clientPool) Put(conn *grpc.ClientConn) {
+func (p *ClientPool) Put(conn *grpc.ClientConn) {
 	if conn.GetState() == connectivity.Shutdown || conn.GetState() == connectivity.TransientFailure {
 		conn.Close()
 		conn = p.pool.New().(*grpc.ClientConn)
